@@ -14,7 +14,7 @@ if __name__ == "__main__":
     readonly_usecase = f"{NEURODAMUS_DIR}/tests/simulations/usecase3"
 
     with tempfile.TemporaryDirectory() as tdir:
-        shutil.copytree(readonly_usecase, tdir)
+        shutil.copytree(readonly_usecase, tdir, dirs_exist_ok=True)
 
         subprocess.run(
             [
