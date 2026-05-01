@@ -22,7 +22,7 @@ if __name__ == "__main__":
             f"{neurodamus_python}/init.py",
             "--configFile=simulation_sonata.json",
         ],
-        cwd=f"{NEURODAMUS_DIR}/tests/simulations/usercase3",
+        cwd=f"{NEURODAMUS_DIR}/tests/simulations/usecase3",
         check=True,
     )
 
@@ -42,7 +42,7 @@ if __name__ == "__main__":
             f"{neurodamus}/init.py",
             "--configFile=simulation_sonata_coreneuron.json",
         ],
-        cwd=f"{NEURODAMUS_DIR}/tests/simulations/usercase3",
+        cwd=f"{NEURODAMUS_DIR}/tests/simulations/usecase3",
         check=True,
     )
 
