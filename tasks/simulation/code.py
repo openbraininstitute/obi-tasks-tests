@@ -11,7 +11,7 @@ NEURODAMUS_DIR = "/tmp/neurodamus"
 if __name__ == "__main__":
     neurodamus_python = os.environ["NEURODAMUS_PYTHON"]
 
-    readonly_usecase = (f"{NEURODAMUS_DIR}/tests/simulations/usecase3",)
+    readonly_usecase = f"{NEURODAMUS_DIR}/tests/simulations/usecase3"
 
     with tempfile.TemporaryDirectory() as tdir:
         shutil.copytree(readonly_usecase, tdir)
@@ -46,7 +46,7 @@ if __name__ == "__main__":
                 "special",
                 "-mpi",
                 "-python",
-                f"{neurodamus}/init.py",
+                f"{neurodamus_python}/init.py",
                 "--configFile=simulation_sonata_coreneuron.json",
             ],
             cwd=tdir,
