@@ -1,6 +1,8 @@
 import os
+import shutil
 import subprocess
 from pathlib import Path
+import tempfile
 
 
 NEURODAMUS_DIR = "/tmp/neurodamus"
@@ -9,42 +11,47 @@ NEURODAMUS_DIR = "/tmp/neurodamus"
 if __name__ == "__main__":
     neurodamus_python = os.environ["NEURODAMUS_PYTHON"]
 
-    subprocess.run(
-        [
-            "mpirun",
-            "--allow-run-as-root",
-            "--use-hwthread-cpus",
-            "-np",
-            "2",
-            "special",
-            "-mpi",
-            "-python",
-            f"{neurodamus_python}/init.py",
-            "--configFile=simulation_sonata.json",
-        ],
-        cwd=f"{NEURODAMUS_DIR}/tests/simulations/usecase3",
-        check=True,
-    )
+    readonly_usecase = (f"{NEURODAMUS_DIR}/tests/simulations/usecase3",)
 
-    for f in Path("reporting").glob("*.h5"):
-        print(f)
+    with tempfile.TemporaryDirectory() as tdir:
+        shutil.copytree(readonly_usecase, tdir)
 
-    subprocess.run(
-        [
-            "mpirun",
-            "--allow-run-as-root",
-            "--use-hwthread-cpus",
-            "-np",
-            "2",
-            "special",
-            "-mpi",
-            "-python",
-            f"{neurodamus}/init.py",
-            "--configFile=simulation_sonata_coreneuron.json",
-        ],
-        cwd=f"{NEURODAMUS_DIR}/tests/simulations/usecase3",
-        check=True,
-    )
+        subprocess.run(
+            [
+                "mpirun",
+                "--allow-run-as-root",
+                "--use-hwthread-cpus",
+                "-np",
+                "2",
+                "special",
+                "-mpi",
+                "-python",
+                f"{neurodamus_python}/init.py",
+                "--configFile=simulation_sonata.json",
+            ],
+            cwd=tdir,
+            check=True,
+        )
 
-    for f in Path("reporting_coreneuron").glob("*.h5"):
-        print(f)
+        for f in Path(f"{tdir}/reporting").glob("*.h5"):
+            print(f)
+
+        subprocess.run(
+            [
+                "mpirun",
+                "--allow-run-as-root",
+                "--use-hwthread-cpus",
+                "-np",
+                "2",
+                "special",
+                "-mpi",
+                "-python",
+                f"{neurodamus}/init.py",
+                "--configFile=simulation_sonata_coreneuron.json",
+            ],
+            cwd=tdir,
+            check=True,
+        )
+
+        for f in Path(f"{tdir}/reporting_coreneuron").glob("*.h5"):
+            print(f)
