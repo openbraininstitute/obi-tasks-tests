@@ -19,7 +19,6 @@ if __name__ == "__main__":
         subprocess.run(
             [
                 "mpirun",
-                "--allow-run-as-root",
                 "--use-hwthread-cpus",
                 "-np",
                 "2",
@@ -39,7 +38,6 @@ if __name__ == "__main__":
         subprocess.run(
             [
                 "mpirun",
-                "--allow-run-as-root",
                 "--use-hwthread-cpus",
                 "-np",
                 "2",
