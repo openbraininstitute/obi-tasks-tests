@@ -10,8 +10,12 @@ NEURODAMUS_DIR = "/tmp/neurodamus"
 
 if __name__ == "__main__":
     neurodamus_python = os.environ["NEURODAMUS_PYTHON"]
+    models_dir = Path(os.environ["NEOCORTEX_MODELS"])
 
     readonly_usecase = f"{NEURODAMUS_DIR}/tests/simulations/usecase3"
+
+    hoc_library_path = models_dir / "share/neurodamus_neocortex/hoc"
+    path = f"{models_dir / 'bin'}:{os.environ['PATH']}"
 
     with tempfile.TemporaryDirectory() as tdir:
         shutil.copytree(readonly_usecase, tdir, dirs_exist_ok=True)
@@ -30,6 +34,12 @@ if __name__ == "__main__":
             ],
             cwd=tdir,
             check=True,
+            env=os.environ
+            | {
+                "HOC_LIBRARY_PATH": str(hoc_library_path),
+                "NRNMECH_LIB_PATH": str(models_dir / "lib/libnrnmech.so"),
+                "PATH": path,
+            },
         )
 
         for f in Path(f"{tdir}/reporting").glob("*.h5"):
@@ -49,6 +59,12 @@ if __name__ == "__main__":
             ],
             cwd=tdir,
             check=True,
+            env=os.environ
+            | {
+                "HOC_LIBRARY_PATH": str(hoc_library_path),
+                "CORENEURONLIB": str(models_dir / "lib/libcorenrnmech.so"),
+                "PATH": path,
+            },
         )
 
         for f in Path(f"{tdir}/reporting_coreneuron").glob("*.h5"):
