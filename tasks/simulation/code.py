@@ -10,7 +10,7 @@ NEURODAMUS_DIR = "/tmp/neurodamus"
 
 if __name__ == "__main__":
     neurodamus_python = os.environ["NEURODAMUS_PYTHON"]
-    models_dir = Path(os.environ["NEOCORTEX_MODELS"])
+    models_dir = Path(os.environ["NEURODAMUS_MODELS"])
 
     readonly_usecase = f"{NEURODAMUS_DIR}/tests/simulations/usecase3"
 
