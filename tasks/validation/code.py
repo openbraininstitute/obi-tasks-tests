@@ -38,6 +38,8 @@ if __name__ == "__main__":
     deployment = os.environ["DEPLOYMENT"]
     persistent_token_id = os.environ["PERSISTENT_TOKEN_ID"]
 
+    print(f"{deployment=}")
+
     token_manager = TokenFromFunction(
         partial(
             get_token,
