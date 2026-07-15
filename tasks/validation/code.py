@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 from functools import partial
@@ -31,6 +32,12 @@ def ls(path):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        force=True,
+    )
     ls("/data/aws_s3_internal/private")
 
     entity_id = sys.argv[1]
