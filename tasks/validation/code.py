@@ -56,7 +56,7 @@ if __name__ == "__main__":
         ),
     )
 
-    client = Client(environment="staging", token_manager=token_manager)
+    client = Client(environment=deployment, token_manager=token_manager)
 
     res = validate_morphology(client, entity_id)
     print(f"Success! {res}")
